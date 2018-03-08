@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+
+- hosts: localhost
+  vars:
+    samba_netbios_name: VM ekrdev
+    samba_users:
+      - name: ekr
+        # echo -n $PASSWD | ansible-vault encrypt_string --vault-id @prompt --stdin-name 'password'
+        password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          35396135663139343461636531653339373966646632633765363631363935333533313037303933
+          3862613666616239366234646432616565313566613961390a343063666339616539303038666265
+          62313262383635343232353437373630653037636366356535636564383234666633396638333233
+          3339363236366130350a313235633635366165326139323338323730656364613437643735323461
+          3339
+    samba_shares_root: /
+    samba_shares:
+      - name: ekr
+        path: /home/ekr
+        valid_users: ekr
+        write_list: ekr
+        group: ekr
+  roles:
+    # Windows: net use x: \\192.168.56.101\ekr /user:ekr
+    - bertvv.samba
+  tasks:
+    - name: fix samba ntlm
+      ini_file:
+        path: /etc/samba/smb.conf
+        section: global
+        option: lanman auth
+        value: no
+    - name: fix samba ntlm2
+      ini_file:
+        path: /etc/samba/smb.conf
+        section: global
+        option: ntlm auth
+        value: yes
+    - name: fix samba ntlm3
+      ini_file:
+        path: /etc/samba/smb.conf
+        section: global
+        option: client lanman auth
+        value: no

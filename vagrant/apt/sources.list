@@ -1,0 +1,16 @@
+
+deb  http://deb.debian.org/debian stretch main contrib non-free
+deb-src  http://deb.debian.org/debian stretch main contrib non-free
+
+deb  http://deb.debian.org/debian stretch-updates main contrib non-free
+deb-src  http://deb.debian.org/debian stretch-updates main contrib non-free
+
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
+
+deb http://http.us.debian.org/debian sid main non-free contrib
+
+# Docker
+deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+# deb-src [arch=amd64] https://download.docker.com/linux/debian stretch stable
+#deb http://ftp.debian.org/debian stretch-backports main
